@@ -1,9 +1,16 @@
 #!/bin/bash
 
 if ! (return 0 2>/dev/null) ; then
-    echo "This script must be sourced"
+    echo "Error: This script must be sourced."
+    exit 1
+fi
+
+ROOT_DIR=$(cd -P $(dirname ${BASH_SOURCE[0]}) && pwd)
+VENV_PATH=${ROOT_DIR}/venv/bin/activate
+
+if [ ! -f "${VENV_PATH}" ] ; then
+    echo "Error: 'venv' not found"
     return 1
 fi
 
-this_dir=$(cd -P $(dirname ${BASH_SOURCE[0]}) && pwd)
-source ${this_dir}/venv/bin/activate
+source ${VENV_PATH}
