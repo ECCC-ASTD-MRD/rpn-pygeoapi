@@ -58,8 +58,8 @@ server:
     admin: false # enable admin api
 
 logging:
-    level: ERROR
-    #logfile: /tmp/pygeoapi.log
+    level: DEBUG
+    logfile: ../tmp/pygeoapi.log
 
 metadata:
     identification:
@@ -104,6 +104,32 @@ metadata:
         role: pointOfContact
 
 resources:
+    dataset-zarr:
+        type: collection
+        title: "Collection de fichiers Zarr"
+        description: "Cet ensemble regroupe une vingtaine de fichiers Zarr."
+        keywords:
+            - Zarr
+            - Debug
+        links: []
+        extents:
+            spatial:
+                bbox: [-180, -90, 180, 90]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+        providers:
+          - type: coverage
+            name: xarray
+            #name: pygeoapi.provider.xarray-custom.CustomXarrayProvider
+            # data: ../zarr/caps-wings/20260119T00Z_MSC_CAPS-WEonG_AllVar-WINGS_Sfc_RLatLon0.03.zarr
+            # data: ../zarr/gdps-weong/20260119T00Z_MSC_GDPS-WEonG_AllVar_Sfc_LatLon0.14.zarr
+            #data: ../zarr/vof-wings/20260121T00Z_MSC_VOF_AllVar-WINGS_Sfc_RLatLon0.02.zarr
+            data: tests/data/caps-wings.json
+            options:
+                engine: zarr
+                chunks: {}
+            format:
+                name: zarr
+                mimetype: application/zip
     obs:
         type: collection
         title: Observations

@@ -1,2 +1,4 @@
 -e ./pygeoapi
-
+xarray
+fsspec
+numpy

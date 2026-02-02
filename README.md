@@ -1,19 +1,19 @@
 # RPN-PYGEOAPI
 
-## Run initial-setup.sh
+## Run Initial Setup
 
-```BASH
+```bash
     ./initial-setup.sh
 ```
 
-## Source setup.sh
+## Source Setup
 
-```BASH
+```bash
     . setup.sh
 ```
 
 ## Start Server
 
-```BASH
+```bash
     ./bin/start-server.sh
 ```
