@@ -4,7 +4,7 @@ set -e
 
 project_dir=$(cd -P $(dirname ${BASH_SOURCE[0]})/.. && pwd)
 
-mkdir ${project_dir}/pygeoapi/tests/data/combined_jsons
+mkdir -p ${project_dir}/pygeoapi/tests/data/combined_jsons
 
 cp -r ${project_dir}/combined_jsons ${project_dir}/pygeoapi/tests/data/combined_jsons
 

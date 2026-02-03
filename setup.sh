@@ -1,5 +1,3 @@
-#!/bin/bash
-
 if ! (return 0 2>/dev/null) ; then
     echo "Error: This script must be sourced."
     exit 1

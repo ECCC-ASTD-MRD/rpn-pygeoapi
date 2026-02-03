@@ -8,7 +8,7 @@ from virtualizarr import open_virtual_dataset
 from kerchunk.combine import MultiZarrToZarr
 from kerchunk.zarr import single_zarr
 
-ZARR_DIR = 'zarr/vof-wings'
+ZARR_DIR = 'zarr/caps-wings'
 OUTPUT_JSON = './combined.json'
 
 def create_merged_index():

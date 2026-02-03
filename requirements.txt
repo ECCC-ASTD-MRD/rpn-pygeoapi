@@ -1,4 +1,14 @@
 -e ./pygeoapi
+
+# --- Data Processing & Arrays ---
 xarray
 fsspec
 numpy
+
+# --- Virtual Datasets --- 
+kerchunk
+virtualizarr
+
+# --- Utilities and UI ---
+tqdm
+spinner

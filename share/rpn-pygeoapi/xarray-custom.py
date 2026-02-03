@@ -3,18 +3,17 @@ from pygeoapi.provider.xarray_ import XarrayProvider
 import numpy as np
 import logging
 import xarray as xr
+import fsspec
 
 LOGGER = logging.getLogger(__name__)
 class CustomXarrayProvider(XarrayProvider):
     
     def __init__(self, provider_def): 
-        # On ne peut pas appeler super().__init__ directement car il échouerait
-        # à ouvrir le JSON comme un dataset classique. 
-        # Il faut reproduire une partie de la logique de xarray_.py
+        super().__init__(provider_def)
         
         self.data = provider_def['data']
         if self.data.endswith('.json'): 
-            #Logique Kerchunk 
+            # Logique Kerchunk 
             fs = fsspec.filesystem("reference", fo=self.data, remote_options={'anon': True}) # à adapter
             
             m = fs.get_mapper("") 

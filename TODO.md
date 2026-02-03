@@ -1,8 +1,8 @@
 # TODO LIST
 
-- [] Faire des commits souvent pour garder une trace
+- [x] ~~Faire des commits souvent pour garder une trace~~
 
-- [] Créer le lien symbolique dans le setup initial
+- [x] ~~Créer le lien symbolique dans le setup initial~~
 
 - [x] ~~Sort files according to Linux file system~~
 

@@ -1,84 +1,61 @@
 #!/usr/bin/env python3
 
-import os
-import glob
-import ujson
+from pathlib import Path
 import argparse
+
+from zoneinfo import ZoneInfo
+from datetime import datetime
+from time import perf_counter
+
 from kerchunk.combine import MultiZarrToZarr
 from kerchunk.zarr import single_zarr
 
-import time
+import ujson
 from tqdm import tqdm
-from datetime import datetime
-from zoneinfo import ZoneInfo
 
+import xarray as xr
 
-import spinner
+def generate_index(input_dir, output_dir):
+    '''
+        Parameters:
+            - input_dir: Folder containing the Zarr files to merge
+            - output_dir: Folder in which the JSON manifest is created
+    '''
+    zarr_files = sorted(list(input_dir.glob("*.zarr")))
 
-PARENT_DIR = 'zarr'
-OUTPUT_DIR = 'combined_jsons'
-
-def generate_index_for_subfamily(subfamily_path, output_path):
-    """
-    Generates a single Kerchunk JSON index for a specific subfamily subdirectory.
-    
-        Returns:
-            - (True, None) on success,
-            - (False, error_message) on failure.
-    """
-    
-    if os.path.exists(output_path):
-        return True, "Déjà existant (Skipped)"
-    
-    print(f"Processing: {subfamily_path}")
-    
-    zarr_files = sorted(glob.glob(os.path.join(subfamily_path, "*.zarr")))
-
-    if not zarr_files:
-        print(f"\t -> No .zarr found in {subfamily_path}, skipping.")
-        return
-    
     single_indexes = []
-    
-    for f in tqdm(zarr_files, desc=f"  -> Fichiers dans {os.path.basename(subfamily_path)}", leave=False):
+
+    for f in tqdm(zarr_files, desc=f"  -> Files in {input_dir.name}", leave=False):
         try:
-            ds = single_zarr(
-                f,
-                inline_threshold=0
-            )
+            ds = single_zarr(str(f), inline_threshold=0)
             single_indexes.append(ds)
         except Exception as e:
-            print(f"\t -> Error reading {f}: {e}.")
-            continue
-        
-    if not single_indexes:
-        print("\t -> No valid indexes generated.")
-        return
+            print(f"\t -> Error reading {f.name}: {e}.")
+            raise e
     
+    if not single_indexes:
+        return False, "Aucun index créé."
+
     try:
         mzz = MultiZarrToZarr(
             single_indexes,
             remote_protocol='file',
             concat_dims=['time'],
-            identical_dims=['lat', 'lon', 'height', 'y', 'x']
+            identical_dims=['lat', 'lon'],
+            coo_map={'time':'cf:time'},
+            preprocess=None
         )
         
         print(f"    Fusion de {len(single_indexes)} fichiers en cours...")
-        #with Spinner("  Assemblage du JSON final "):
         dico_fusionne = mzz.translate()
             
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, 'w') as f:
-            ujson.dump(dico_fusionne, f)
-            
-        print(f"\t -> Success! Index saved to: {output_path}")
-        
-        return True, None
-    
+        output_dir.parent.mkdir(parents=True, exist_ok=True)
+        output_dir.write_text(ujson.dumps(dico_fusionne))
+
+        return True, "Succès"
     except Exception as e:
-        
-        print(f"\t -> Error combining indexes for {subfamily_path}: {e}")
-        return False, str(e)
+        print(f"\t -> Error combining indexes for {input_dir}: {e}")
+        return False, "Erreur"
     
 def main():
     
@@ -99,42 +76,43 @@ def main():
     
     args = parser.parse_args()
     
-    if not os.path.isdir(args.input):
+    input_path = Path(args.input)
+    output_dir = Path(args.output)
+    
+    if not input_path.is_dir():
         print(f"Erreur : Le répertoire d'entrée '{args.input}' n'existe pas.")
         return
     
-    if not os.path.exists(args.output):
-        os.makedirs(args.output)
+    output_dir.mkdir(parents=True, exist_ok=True)
     
-    items = sorted(glob.glob(os.path.join(args.input, '*')))
-    sub_folders = [i for i in items if os.path.isdir(i)]
-    
-    # --- CONFIGURATION DU TEMPS ---
-    # On définit le timezone de Montréal
+    # Sets Montreal Timezone for DEBUG log
     mtl_tz = ZoneInfo("America/Montreal")
-    
     start_dt = datetime.now(mtl_tz)
-    print(f"Début du traitement de {len(sub_folders)} families Zarr...")
-    print(f"Source : {args.input} | Destination : {args.output}")
-    print(f"  - {start_dt.strftime('%Y-%m-%d %H:%M:%S')} (Montréal)")
-    start_time = time.time()
+    
+    print(f"Source : {input_path.resolve()} | Destination : {output_dir.resolve()}")
+    print(f"  - {start_dt.strftime('%Y-%m-%d %H:%M:%S')} (Montreal)")
+    
+    start_time = perf_counter()
+    
+    sub_folders = sorted([f for f in input_path.iterdir() if f.is_dir()])
     
     success_list = []
     failure_list = []
     
-    for item in tqdm(sub_folders, desc="Progression globale", unit="famille"):
+    for folder in tqdm(sub_folders, desc="Overall Progress", unit="family"):
         
-        folder_name = os.path.basename(item)
-        output_json_path = os.path.join(args.output, f"{folder_name}.json")
-            
-        success, erreur_msg = generate_index_for_subfamily(item, output_json_path)
+        json_file = output_dir / f"{folder.name}.json"
+        
+        success, error_msg = generate_index(folder, json_file)
         
         if success:
-            success_list.append(folder_name)
+            success_list.append(folder.name)
         else:
-            failure_list.append((folder_name, erreur_msg))
+            failure_list.append((folder.name, error_msg))
     
-    total_time = time.time() - start_time
+    end_time = perf_counter()
+    total_time = end_time - start_time
+    
     end_dt = datetime.now(mtl_tz)
     
     print(f"--- Terminé en {total_time:.2f} secondes ---")
@@ -146,13 +124,12 @@ def main():
     print(f"\n SUCCÈS : {len(success_list)} dossiers.")
     print(f"\n ÉCHECS : {len(failure_list)} dossiers.")
     
-    for nom, erreur in failure_list:
-        print(f"  - Dossier : {nom}")
-        print(f"    Cause : {erreur}")
+    for name, error in failure_list:
+        print(f"  - Dossier : {name}")
+        print(f"    Cause : {error}")
         print("-" * 30)
     
-    print("\nFin du script.")
+    print("\nEnd of script.")
         
 if __name__ == "__main__":
     main()
-    
