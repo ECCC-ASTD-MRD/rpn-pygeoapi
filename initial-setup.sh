@@ -23,8 +23,3 @@ if [ ! -d "${zarr_folder}" ] ; then
 else
     echo "Le sous-répertoire 'zarr' existe déjà."
 fi
-
-# Configuration File
-if [ ! -f "example-config.yml" ] ; then
-    cp pygeoapi/pygeoapi-config.yml pygeoapi/example-config.yml
-fi
