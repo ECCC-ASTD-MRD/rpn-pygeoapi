@@ -10,80 +10,43 @@ from time import perf_counter
 from kerchunk.combine import MultiZarrToZarr
 from kerchunk.zarr import single_zarr
 
-import ujson
+import ujson # ultra fast JSON encoder and decoder written in pure C
 from tqdm import tqdm
 
 import xarray as xr
 
-def generate_index(input_dir, output_dir):
-    '''
-        Parameters:
-            - input_dir: Folder containing the Zarr files to merge
-            - output_dir: Folder in which the JSON manifest is created
-    '''
-    zarr_files = sorted(list(input_dir.glob("*.zarr")))
+DESCRIPTION = "Généralise la création d'index Kerchunk pour des répertoires Zarr."
 
-    single_indexes = []
-
-    for f in tqdm(zarr_files, desc=f"  -> Files in {input_dir.name}", leave=False):
-        try:
-            ds = single_zarr(str(f), inline_threshold=0)
-            single_indexes.append(ds)
-        except Exception as e:
-            print(f"\t -> Error reading {f.name}: {e}.")
-            raise e
+def get_args():
     
-    if not single_indexes:
-        return False, "Aucun index créé."
-
-    try:
-        mzz = MultiZarrToZarr(
-            single_indexes,
-            remote_protocol='file',
-            concat_dims=['time'],
-            identical_dims=['lat', 'lon'],
-            coo_map={'time':'cf:time'},
-            preprocess=None
-        )
-        
-        print(f"    Fusion de {len(single_indexes)} fichiers en cours...")
-        dico_fusionne = mzz.translate()
-            
-        output_dir.parent.mkdir(parents=True, exist_ok=True)
-        output_dir.write_text(ujson.dumps(dico_fusionne))
-
-        return True, "Succès"
-    except Exception as e:
-        print(f"\t -> Error combining indexes for {input_dir}: {e}")
-        return False, "Erreur"
+    p = argparse.ArgumentParser(description=DESCRIPTION)
     
-def main():
-    
-    # --- Gestion des arguments ---
-    parser = argparse.ArgumentParser(description="Généralise la création d'index Kerchunk pour des répertoires Zarr.")
-    
-    parser.add_argument(
+    p.add_argument(
         "-i", "--input",
         required=True,
+        type=Path,
         help="Répertoire parent contenant les dossiers de familles Zarr"
     )
     
-    parser.add_argument(
+    p.add_argument(
         "-o", "--output",
         default="combined_jsons",
+        type=Path,
         help="Répertoire de sortie pour les fichiers JSON (défaut: combined_jsons)"
     )
     
-    args = parser.parse_args()
+    args = p.parse_args()
     
-    input_path = Path(args.input)
-    output_dir = Path(args.output)
+    if not args.input.is_dir():
+        p.error(f"Erreur : Le répertoire d'entrée '{args.input}' n'existe pas.")
+        
+    return args
+
+def main():
     
-    if not input_path.is_dir():
-        print(f"Erreur : Le répertoire d'entrée '{args.input}' n'existe pas.")
-        return
+    args = get_args()
     
-    output_dir.mkdir(parents=True, exist_ok=True)
+    args.output.mkdir(parents=True, exist_ok=True)
     
     # Sets Montreal Timezone for DEBUG log
     mtl_tz = ZoneInfo("America/Montreal")
@@ -130,6 +93,50 @@ def main():
         print("-" * 30)
     
     print("\nEnd of script.")
+    
+    
+def generate_index(input_dir, output_dir):
+    '''
+        Parameters:
+            - input_dir: Folder containing the Zarr files to merge
+            - output_dir: Folder in which the JSON manifest is created
+    '''
+    zarr_files = sorted(list(input_dir.glob("*.zarr")))
+
+    single_indexes = []
+
+    for f in tqdm(zarr_files, desc=f"  -> Files in {input_dir.name}", leave=False):
+        try:
+            ds = single_zarr(str(f), inline_threshold=0)
+            single_indexes.append(ds)
+        except Exception as e:
+            print(f"\t -> Error reading {f.name}: {e}.")
+            raise e
+    
+    if not single_indexes:
+        return False, "Aucun index créé."
+
+    try:
+        mzz = MultiZarrToZarr(
+            single_indexes,
+            remote_protocol='file',
+            concat_dims=['time'],
+            identical_dims=['lat', 'lon'],
+            coo_map={'time':'cf:time'},
+            preprocess=None
+        )
+        
+        print(f"    Fusion de {len(single_indexes)} fichiers en cours...")
+        dico_fusionne = mzz.translate()
+            
+        output_dir.parent.mkdir(parents=True, exist_ok=True)
+        output_dir.write_text(ujson.dumps(dico_fusionne))
+
+        return True, "Succès"
+    except Exception as e:
+        print(f"\t -> Error combining indexes for {input_dir}: {e}")
+        return False, "Erreur"
+    
         
 if __name__ == "__main__":
     main()

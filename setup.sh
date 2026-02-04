@@ -12,3 +12,5 @@ if [ ! -f "${VENV_PATH}" ] ; then
 fi
 
 source ${VENV_PATH}
+
+export PYTHONPATH=$PYTHONPATH:$ROOT_DIR/share/rpn-pygeoapi
