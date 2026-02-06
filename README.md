@@ -10,6 +10,7 @@ Run this the first time you clone the repo to create the environment and install
 
 ```bash
     # This script creates the venv and runs pip install
+        # creates a symlink to sample data (`/zarr`)
     ./initial-setup.sh
 ```
 

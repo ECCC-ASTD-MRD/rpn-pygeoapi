@@ -52,6 +52,9 @@ def main():
     mtl_tz = ZoneInfo("America/Montreal")
     start_dt = datetime.now(mtl_tz)
     
+    input_path = args.input
+    output_dir = args.output
+    
     print(f"Source : {input_path.resolve()} | Destination : {output_dir.resolve()}")
     print(f"  - {start_dt.strftime('%Y-%m-%d %H:%M:%S')} (Montreal)")
     
