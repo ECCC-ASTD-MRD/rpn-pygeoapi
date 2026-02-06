@@ -3,3 +3,4 @@ venv
 zarr
 tmp
 combined_jsons
+data

@@ -9,6 +9,9 @@ numpy
 kerchunk
 virtualizarr
 
+gcsfs
+dask
+
 # --- Utilities and UI ---
 tqdm
 spinner

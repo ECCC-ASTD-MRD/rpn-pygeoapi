@@ -118,19 +118,25 @@ resources:
                 crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
         providers:
           - type: coverage
-            name: xarray-custom.CustomXarrayProvider
-            #name: pygeoapi.provider.xarray-custom.CustomXarrayProvider
-            data: ../zarr/vof-wings/20260125T00Z_MSC_VOF_AllVar-WINGS_Sfc_RLatLon0.02.zarr
+            #name: xarray-custom.CustomXarrayProvider
+            name: xarray
+            #data: ../zarr/vof-wings/20260125T00Z_MSC_VOF_AllVar-WINGS_Sfc_RLatLon0.02.zarr
             # data: ../zarr/gdps-weong/20260119T00Z_MSC_GDPS-WEonG_AllVar_Sfc_LatLon0.14.zarr
             #data: ../zarr/vof-wings/20260121T00Z_MSC_VOF_AllVar-WINGS_Sfc_RLatLon0.02.zarr
             #data: ../zarr/caps-wings/20260123T00Z_MSC_CAPS-WEonG_AllVar-WINGS_Sfc_RLatLon0.03.zarr
             #data: ../combined_jsons/gdps-diag-weong.json
-            options:
-                engine: zarr
-                chunks: {} 
+            
+            data: ../data/era5.zarr
+            #options:
+             #   engine: zarr
+              #  chunks: {} 
             format:
                 name: zarr
                 mimetype: application/zip
+            options:
+                zarr: 
+                    consolidated: true
+                squeeze: true
     obs:
         type: collection
         title: Observations
