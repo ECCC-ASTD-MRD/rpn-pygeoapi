@@ -15,11 +15,11 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 # Local Sample Data
-zarr_folder="zarr"
+zarr_folder="data/zarr"
 
 if [ ! -d "${zarr_folder}" ] ; then
     ln -s "/fs/site5/eccc/cmd/s/sweb800/weong2zarr/maestro/weong2zarr/hub/ppp6/zarr/" "${zarr_folder}"
-    echo "Les collections de fichiers zarr ont été créées avec succès."
+    echo "Sucessfully linked sample data: '${zarr_folder}'."
 else
-    echo "Le sous-répertoire 'zarr' existe déjà."
+    echo "Sample data already linked: '${zarr_folder}'."
 fi
