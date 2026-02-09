@@ -7,6 +7,7 @@ import asyncio
 from pathlib import Path
 from tqdm.dask import TqdmCallback
 import pandas
+
 current_file = Path(__file__).resolve()
 project_dir = current_file.parents[2]
 

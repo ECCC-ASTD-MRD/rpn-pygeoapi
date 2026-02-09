@@ -1,12 +1,20 @@
 # RPN-PYGEOAPI
 
-This repository provides tools for virtualizing and serving meteorological datasets using `pygeoapi`, `kerchunk`, and `virtualizarr`.
+A lightweight server specifically designed to expose meteorological research data using 'pygeoapi'.
 
-## Installation & Setup 
+## Objectives
 
-### 1. Initial Setup
+To facilitate access to meteorological data, this project aims:
 
-Run this the first time you clone the repo to create the environment and install dependencies.
+- **To serve** geospatial data dynamically through a web interface.
+- **To create** virtual subsets  of large datasets.
+- **To avoid** data duplication of heavy storage redundancy.
+
+## Setup & Run
+
+### Installation
+
+Run this once to set up the environment and dependencies.
 
 ```bash
     # This script creates the venv and runs pip install

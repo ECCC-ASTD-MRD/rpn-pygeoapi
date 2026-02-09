@@ -1,11 +1,11 @@
--e ./pygeoapi
+-e ./pygeoapi   #  To serve as the core OGC API framework
 
 # --- Data Processing ---
 
-xarray      # To handle gridded data within the custom provider
-kerchunk    # To merge multiple Zarr files into a unified JSON index
-gcsfs       # To access Google Cloud Storage buckets (e.g., ERA5 data)
+xarray          # To handle gridded data within the custom provider
+kerchunk        # To merge multiple Zarr files into a unified JSON index
+gcsfs           # To access Google Cloud Storage buckets (e.g., ERA5 data)
 
 # --- Utilities & UI ---
 
-tqdm        # To visualize long-running data processing tasks
+tqdm            # To visualize long-running data processing tasks
