@@ -4,11 +4,10 @@
 import xarray as xr
 import gcsfs
 import asyncio
-from pathlib import Path
-from tqdm.dask import TqdmCallback
-import pandas
+import pathlib
+import tqdm.dask
 
-current_file = Path(__file__).resolve()
+current_file = pathlib.Path(__file__)
 project_dir = current_file.parents[2]
 
 async def read_data():
@@ -23,8 +22,7 @@ async def read_data():
                       )
     print(ds_slice.time)
     
-    with TqdmCallback(desc="Download ERA5 Data"):
+    with tqdm.dask.TqdmCallback(desc="Download ERA5 Data"):
         ds_slice.to_zarr(f"./data/era5.zarr", mode='w', zarr_format=2, compute=True)
-
 
 asyncio.run(read_data())
