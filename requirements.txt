@@ -1,17 +1,11 @@
 -e ./pygeoapi
 
-# --- Data Processing & Arrays ---
-xarray
-fsspec
-numpy
+# --- Data Processing ---
 
-# --- Virtual Datasets --- 
-kerchunk
-virtualizarr
+xarray      # To handle gridded data within the custom provider
+kerchunk    # To merge multiple Zarr files into a unified JSON index
+gcsfs       # To access Google Cloud Storage buckets (e.g., ERA5 data)
 
-gcsfs # to fetch this data [https://console.cloud.google.com/storage/browser/gcp-public-data-arco-era5/ar/1959-2022-6h-1440x721.zarr]
-dask
+# --- Utilities & UI ---
 
-# --- Utilities and UI ---
-tqdm
-spinner
+tqdm        # To visualize long-running data processing tasks
