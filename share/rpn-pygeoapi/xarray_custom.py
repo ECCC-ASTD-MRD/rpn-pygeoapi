@@ -1,13 +1,15 @@
-from warnings import resetwarnings
 from pygeoapi.provider.xarray_ import XarrayProvider
 import numpy as np
-import logging
 import xarray as xr
 import fsspec
+import logging
 
 LOGGER = logging.getLogger(__name__)
+
 class CustomXarrayProvider(XarrayProvider):
-    
+    """
+    This wrapper class serves as a custom Xarray Provider, and supports JSON index files.
+    """
     def __init__(self, provider_def): 
         super().__init__(provider_def)
         
@@ -26,9 +28,7 @@ class CustomXarrayProvider(XarrayProvider):
             self.get_fields()
         else: 
             super().__init__(provider_def)
-    """
-    This wrapper class serves as a custom Xarray Provider
-    """
+            
     def _sanitize(self, obj):
         """Clean lists and dictionaries recursively"""
         if  isinstance(obj, dict):

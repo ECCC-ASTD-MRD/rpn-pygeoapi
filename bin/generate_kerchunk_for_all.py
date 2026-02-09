@@ -13,8 +13,6 @@ from kerchunk.zarr import single_zarr
 import ujson # ultra fast JSON encoder and decoder written in pure C
 from tqdm import tqdm
 
-import xarray as xr
-
 DESCRIPTION = "Généralise la création d'index Kerchunk pour des répertoires Zarr."
 
 def get_args():
@@ -114,7 +112,7 @@ def generate_index(input_dir, output_dir):
             single_indexes.append(ds)
         except Exception as e:
             print(f"\t -> Error reading {f.name}: {e}.")
-            raise e
+            return False, "${e}"# raise e
     
     if not single_indexes:
         return False, "Aucun index créé."
@@ -125,7 +123,6 @@ def generate_index(input_dir, output_dir):
             remote_protocol='file',
             concat_dims=['time'],
             identical_dims=['lat', 'lon'],
-            coo_map={'time':'cf:time'},
             preprocess=None
         )
         
