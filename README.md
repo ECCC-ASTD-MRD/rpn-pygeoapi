@@ -1,28 +1,32 @@
 # RPN-PYGEOAPI
 
-A lightweight server specifically designed to expose meteorological research data using 'pygeoapi'.
+Exposing meteorological research datasets using `pygeoapi`.
 
-## Objectives
+## 🎯 Objectives
 
 To facilitate access to meteorological data, this project aims:
 
-- **To serve** geospatial data dynamically through a web interface.
-- **To create** virtual subsets  of large datasets.
-- **To avoid** data duplication of heavy storage redundancy.
+- **To serve** geospatial data through a web interface.
+- **To create** virtual subsets of large datasets.
+- **To avoid** data duplication.
 
-## Setup & Run
+## ⚙️ Stack
 
-### Installation
+* **Core:** `pygeoapi`
+* **Data Handling:** Currently experimenting with `kerchunk`
+
+## 🚀 Setup & Run
+
+### 1. Install Prerequisites
 
 Run this once to set up the environment and dependencies.
 
 ```bash
-    # This script creates the venv and runs pip install
-        # creates a symlink to sample data (`/zarr`)
+    # additionally creates a symlink to sample data (`/zarr`)
     ./initial-setup.sh
 ```
 
-### 2. Environment Activation
+### 2. Activate Environment
 
 To work within the project, you must source the setup script. This ensures your shell is correctly configured.
 
@@ -30,7 +34,7 @@ To work within the project, you must source the setup script. This ensures your 
     source setup.sh
 ```
 
-### 3. Starting the Server
+### 3. Start The Server
 
 Once the environment is active, launch the `pygeoapi` server to expose your virtual datasets.
 
