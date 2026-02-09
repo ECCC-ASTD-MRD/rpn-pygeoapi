@@ -1,7 +1,7 @@
 .vscode
 venv
 zarr
-tmp
 combined_jsons
 data
 example-openapi.yml
+var/rpn-pygeoapi/log

@@ -9,7 +9,7 @@ numpy
 kerchunk
 virtualizarr
 
-gcsfs
+gcsfs # to fetch this data [https://console.cloud.google.com/storage/browser/gcp-public-data-arco-era5/ar/1959-2022-6h-1440x721.zarr]
 dask
 
 # --- Utilities and UI ---
