@@ -14,7 +14,7 @@ git submodule update --init --recursive
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# Template Data
+# Local Sample Data
 zarr_folder="zarr"
 
 if [ ! -d "${zarr_folder}" ] ; then
