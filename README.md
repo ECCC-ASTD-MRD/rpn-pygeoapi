@@ -40,3 +40,14 @@ Once the environment is active, launch the `pygeoapi` server to expose your virt
 ```bash
     ./bin/start-server.sh
 ```
+
+
+## Retrieving Datasets
+
+To avoid exceeding your storage quota, you'll to create a symlink as such:
+
+```bash
+    ln -s /fs/site5/eccc/mrd/rpnsi/$USER my_storage_space
+```
+
+Once that's done, you'll be able to run heavy scripts like `share/rpn-pygeoapi/fetch-data.py`.
