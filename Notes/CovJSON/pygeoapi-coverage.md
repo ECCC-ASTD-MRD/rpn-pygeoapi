@@ -57,3 +57,7 @@ Attributes: (12/14)
     coordinates:      time lat lon
 
 ```
+
+RAW LIST:
+
+    - http://localhost:5000/collections/public-zarr/coverage?f=json&bbox=-90,-90,90,90&properties=2m_temperature,10m_u_component_of_wind&datetime=2020-01-01T00:00:00/2020-01-01T00:00:00

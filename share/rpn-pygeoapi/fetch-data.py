@@ -17,8 +17,8 @@ async def read_data():
     ds = xr.open_zarr(store, consolidated=True)
     
     ds_slice = ds.sel(
-                        time=slice('2020-01-01T00:00:00','2020-01-01T18:00:00'),                        
-                        longitude=slice(20,40)
+                        time=slice('2020-01-01T00:00:00','2020-01-01T18:00:00')#,                        
+                        #longitude=slice(20,40) # pour des tranches spatiales
                       )
     
     print(ds_slice.time)

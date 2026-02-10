@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 
-import os
 import glob
-import xarray as xr
 import ujson
-from virtualizarr import open_virtual_dataset
 from kerchunk.combine import MultiZarrToZarr
 from kerchunk.zarr import single_zarr
 
-ZARR_DIR = 'zarr/caps-wings'
+ZARR_DIR = 'data/zarr/caps-wings'
 OUTPUT_JSON = './combined.json'
 
 def create_merged_index():

@@ -143,7 +143,7 @@ resources:
         providers:
           - type: coverage
             name: xarray
-            data: ./data/era5.zarr
+            data: ./data/storage/era5.zarr
             format:
                 name: zarr
                 mimetype: application/zip
