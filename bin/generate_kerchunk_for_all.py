@@ -3,9 +3,9 @@
 from pathlib import Path
 import argparse
 
-from zoneinfo import ZoneInfo
-from datetime import datetime
-from time import perf_counter
+import zoneinfo
+import datetime
+import time
 
 from kerchunk.combine import MultiZarrToZarr
 from kerchunk.zarr import single_zarr
@@ -28,7 +28,7 @@ def get_args():
     
     p.add_argument(
         "-o", "--output",
-        default="combined_jsons",
+        default="data/combined_jsons",
         type=Path,
         help="Répertoire de sortie pour les fichiers JSON (défaut: combined_jsons)"
     )
@@ -47,8 +47,8 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     
     # Sets Montreal Timezone for DEBUG log
-    mtl_tz = ZoneInfo("America/Montreal")
-    start_dt = datetime.now(mtl_tz)
+    mtl_tz = zoneinfo.ZoneInfo("America/Montreal")
+    start_dt = datetime.datetime.now(mtl_tz)
     
     input_path = args.input
     output_dir = args.output
@@ -56,7 +56,7 @@ def main():
     print(f"Source : {input_path.resolve()} | Destination : {output_dir.resolve()}")
     print(f"  - {start_dt.strftime('%Y-%m-%d %H:%M:%S')} (Montreal)")
     
-    start_time = perf_counter()
+    start_time = time.perf_counter()
     
     sub_folders = sorted([f for f in input_path.iterdir() if f.is_dir()])
     
@@ -74,10 +74,10 @@ def main():
         else:
             failure_list.append((folder.name, error_msg))
     
-    end_time = perf_counter()
+    end_time = time.perf_counter()
     total_time = end_time - start_time
     
-    end_dt = datetime.now(mtl_tz)
+    end_dt = datetime.datetime.now(mtl_tz)
     
     print(f"--- Terminé en {total_time:.2f} secondes ---")
     
@@ -122,8 +122,7 @@ def generate_index(input_dir, output_dir):
             single_indexes,
             remote_protocol='file',
             concat_dims=['time'],
-            identical_dims=['lat', 'lon'],
-            preprocess=None
+            identical_dims=['lat', 'lon']
         )
         
         print(f"    Fusion de {len(single_indexes)} fichiers en cours...")

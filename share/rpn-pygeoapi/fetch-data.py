@@ -20,9 +20,10 @@ async def read_data():
                         time=slice('2020-01-01T00:00:00','2020-01-01T18:00:00'),                        
                         longitude=slice(20,40)
                       )
+    
     print(ds_slice.time)
     
     with tqdm.dask.TqdmCallback(desc="Download ERA5 Data"):
-        ds_slice.to_zarr(f"./data/era5.zarr", mode='w', zarr_format=2, compute=True)
+        ds_slice.to_zarr(f"./data/storage/era5.zarr", mode='w', zarr_format=2, compute=True)
 
 asyncio.run(read_data())

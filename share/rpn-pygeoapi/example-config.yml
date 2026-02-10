@@ -59,7 +59,7 @@ server:
 
 logging:
     level: DEBUG
-    logfile: ./var/rpn-pygeoapi/pygeoapi.log
+    logfile: ./var/rpn-pygeoapi/log/pygeoapi.log
 
 metadata:
     identification:
@@ -119,18 +119,14 @@ resources:
         providers:
           - type: coverage
             name: xarray_custom.CustomXarrayProvider
-            #data: ../zarr/vof-wings/20260125T00Z_MSC_VOF_AllVar-WINGS_Sfc_RLatLon0.02.zarr
-            #data: ../zarr/gdps-weong/20260119T00Z_MSC_GDPS-WEonG_AllVar_Sfc_LatLon0.14.zarr
-            #data: ../zarr/vof-wings/20260121T00Z_MSC_VOF_AllVar-WINGS_Sfc_RLatLon0.02.zarr
-            #data: ../zarr/caps-wings/20260123T00Z_MSC_CAPS-WEonG_AllVar-WINGS_Sfc_RLatLon0.03.zarr
-            data: combined_jsons/gdps-diag-weong.json
-            
+            data: data/combined_jsons/caps-wings.json
             options:
                 engine: zarr
                 chunks: {} 
             format:
                 name: zarr
                 mimetype: application/zip
+
     public-zarr:
         type: collection
         title: "ERA5 Dataset"
@@ -155,6 +151,7 @@ resources:
                 zarr: 
                     consolidated: true
                 squeeze: true
+
     obs:
         type: collection
         title: Observations

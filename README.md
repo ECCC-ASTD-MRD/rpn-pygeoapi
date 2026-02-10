@@ -22,7 +22,6 @@ To facilitate access to meteorological data, this project aims:
 Run this once to set up the environment and dependencies.
 
 ```bash
-    # additionally creates a symlink to sample data (`/zarr`)
     ./initial-setup.sh
 ```
 

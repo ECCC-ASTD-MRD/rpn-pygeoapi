@@ -9,3 +9,4 @@ gcsfs           # To access Google Cloud Storage buckets (e.g., ERA5 data)
 # --- Utilities & UI ---
 
 tqdm            # To visualize long-running data processing tasks
+dask            # Pour tqdm dans fetch-data.py
