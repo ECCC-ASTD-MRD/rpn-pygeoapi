@@ -1,18 +1,18 @@
 # RPN-PYGEOAPI
 
-Exposing meteorological research datasets using `pygeoapi`.
+This project serves meteorological research data using `pygeoapi`.
 
 ## 🎯 Objectives
 
-To facilitate access to meteorological data, this project aims:
+To facilitate access to research data, this project aims:
 
-- **To serve** geospatial data through a web interface.
+- **To serve** meteorological data through a web interface.
 - **To create** virtual subsets of large datasets.
 - **To avoid** data duplication.
 
 ## ⚙️ Stack
 
-* **Core:** `pygeoapi`
+* **Core:** [`pygeoapi`](https://github.com/geopython/pygeoapi)
 * **Data Handling:** Currently experimenting with `kerchunk`
 
 ## 🚀 Setup & Run
@@ -51,3 +51,19 @@ To avoid exceeding your storage quota, you'll to create a symlink as such:
 ```
 
 Once that's done, you'll be able to run heavy scripts like `share/rpn-pygeoapi/fetch-data.py`.
+
+This operation is necessary to retrieve public datasets like _ERA5_ from the web.
+
+## Installing GDAL
+
+If you encounter the `no gdal-config found` error, you may need to manually load the required modules. This issue could also be due to a mismatch between the installed GDAL version and your Python environment.
+
+```bash
+module avail gcc    # optional: to view available modules
+module load gcc/15.0.1
+
+module avail gdal   # optional: to view available modules
+module load gdal/3.11.0
+
+pip install gdal==3.11
+```
