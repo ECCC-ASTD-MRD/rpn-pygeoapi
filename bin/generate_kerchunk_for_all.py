@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from pathlib import Path
+import pathlib
 import argparse
 
 import zoneinfo
@@ -22,14 +22,14 @@ def get_args():
     p.add_argument(
         "-i", "--input",
         required=True,
-        type=Path,
+        type=pathlib.Path,
         help="Répertoire parent contenant les dossiers de familles Zarr"
     )
     
     p.add_argument(
         "-o", "--output",
         default="data/combined_jsons",
-        type=Path,
+        type=pathlib.Path,
         help="Répertoire de sortie pour les fichiers JSON (défaut: combined_jsons)"
     )
     
@@ -134,7 +134,7 @@ def generate_index(input_dir, output_dir):
         return True, "Succès"
     except Exception as e:
         print(f"\t -> Error combining indexes for {input_dir}: {e}")
-        return False, "Erreur"
+        return False, f"{e}"
     
         
 if __name__ == "__main__":

@@ -104,30 +104,80 @@ metadata:
         role: pointOfContact
 
 resources:
-    local-zarr:
+
+    data-map-script:
         type: collection
-        title: "Collection de fichiers Zarr"
-        description: "Cet ensemble regroupe une vingtaine de fichiers Zarr."
+        title: "Dataset pour tester MapScript"
+        description: 
         keywords:
-            - Zarr
-            - Debug
+            - MapScript
+            - OGC Map
         links: []
         extents:
             spatial:
                 bbox: [-180, -90, 180, 90]
                 crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
         providers:
-          - type: coverage
-            name: xarray_custom.CustomXarrayProvider
-            data: data/combined_jsons/caps-wings.json
-            options:
-                engine: zarr
-                chunks: {} 
-            format:
-                name: zarr
-                mimetype: application/zip
+            - type: map
+              name: MapScript
+              data: ./pygeoapi/tests/data/dutch_addresses_shape_4326/inspireadressen.shp
+              options:
+                type: MS_LAYER_POINT
+                layer: foo_name
+                style: ./data/test.sld
+              format:
+                name: png
+                mimetype: image/png
 
-    public-zarr:
+    data-wms-facade:
+        type: collection
+        title: "Dataset pour tester WMSFacade"
+        description: 
+        keywords:
+            - WMS Coverage
+            - OGC Map
+        links: []
+        extents:
+            spatial:
+                bbox: [-180, -90, 180, 90]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+        providers:
+            - type: map
+              name: WMSFacade
+              data: https://demo.mapserver.org/cgi-bin/msautotest
+              options:
+                layer: world_latlong
+                style: default
+                version: 1.3.0
+              format:
+                name: png
+                mimetype: image/png
+
+    #local-zarr:
+     #   type: collection
+      #  title: "Collection de fichiers Zarr"
+      #  description: "Cet ensemble regroupe une vingtaine de fichiers Zarr."
+      #  keywords:
+      #      - Zarr
+      #      - Debug
+      #  links: []
+      #  extents:
+      #      spatial:
+      #          bbox: [-180, -90, 180, 90]
+      #          crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+        
+       # providers:
+        #  - type: coverage
+         #   name: xarray_custom.CustomXarrayProvider
+          #  data: data/combined_jsons/caps-wings.json
+           # options:
+            #    engine: zarr
+             #   chunks: {} 
+        #    format:
+         #       name: zarr
+          #      mimetype: application/zip
+
+    public-zarr:  
         type: collection
         title: "ERA5 Dataset"
         description: "Generic Public Dataset for Testing & Debugging"
@@ -141,16 +191,31 @@ resources:
                 bbox: [-180, -90, 180, 90]
                 crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
         providers:
-          - type: coverage
-            name: xarray
-            data: ./data/storage/era5.zarr
-            format:
-                name: zarr
-                mimetype: application/zip
+        
+          - type: map
+            name: WMSFacade
+            data: https://demo.mapserver.org/cgi-bin/msautotest
+            #data: ./data/storage/era5.zarr # hypothèse que le zarr peut être donné directement
+            #data: http://www.opengis.net/def/crs/OGC/1.3/CRS84 # hypothèse que la projection rend une map
+            # data: file:///localhost # /home/ibb000/rpn-pygeoapi/data/storage/era5.zarr
             options:
-                zarr: 
-                    consolidated: true
-                squeeze: true
+                layer: world_latlong
+                style: default
+                version: 1.3.0
+            format:
+                name: png
+                mimetype: image/png
+
+          #- type: coverage
+           # name: xarray
+            #data: ./data/storage/era5.zarr
+         #   format:
+          #      name: zarr
+           #     mimetype: application/zip
+            #options:
+             #   zarr: 
+              #      consolidated: true
+               # squeeze: true
 
     obs:
         type: collection
