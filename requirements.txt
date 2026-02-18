@@ -15,3 +15,4 @@ dask            # To support 'tqdm' callback progress bar ()
 mapscript
 #mapserver
 #mapscript
+flask-cors
