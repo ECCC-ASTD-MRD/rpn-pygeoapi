@@ -1,6 +1,5 @@
 <?php ?>
 
-
 <input type="number" id="lat-min" placeholder="Lat Min" step="1" , value="10">
 <input type="number" id="lon-min" placeholder="Lon Min" step="1" , value="10">
 <input type="number" id="lat-max" placeholder="Lat Max" step="1" , value="12">

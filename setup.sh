@@ -24,7 +24,7 @@ my-load-conda() {
 
 if ! declare -f conda >/dev/null; then
 	my-load-conda
-	echo "Conda was loaded into your current shell."
+	# echo "Conda was loaded into your current shell."
 fi
 
 env_name="venv"

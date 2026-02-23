@@ -57,6 +57,12 @@ $title = "Visualisation Données Zarr";
             font-size: 0.8rem;
             pointer-events: none;
         }
+
+        .active {
+            width: 50px;
+            overflow: scroll;
+            padding: 10px;
+        }
     </style>
 </head>
 
@@ -67,8 +73,19 @@ $title = "Visualisation Données Zarr";
 
     <!-- ############ SIDEBAR CONTROL PANEL STARTS HERE ############ -->
     <div id="control-panel" class="sidebar">
+        <button style="position:absolute; top:0; right:0;margin:10px;" id="toggle-btn"
+            onclick="toggleSidebar()">–</button>
+        <script>
+            const toggleBtn = document.getElementById('toggle-btn');
+            const controlPanel = document.getElementById('control-panel');
+            toggleBtn.addEventListener('click', () => {
+                controlPanel.classList.toggle('active');
+            });
+        </script>
         <?php include __DIR__ . '/control-panel.php'; ?>
+
     </div>
+
     <!-- ############ SIDEBAR CONTROL PANEL ENDS HERE ############ -->
 
     <div id="map"></div>
@@ -133,6 +150,10 @@ $title = "Visualisation Données Zarr";
                 const minLat = Math.min(axes.y.start, axes.y.stop);
                 const maxLat = Math.max(axes.y.start, axes.y.stop);
 
+                msgCoords = document.createElement("p");
+                msgCoords.innerText = `Étendue des données [minLon, maxLon, minLat, maxLat] : ${minLon}, ${maxLon}, ${minLat}, ${maxLat}`;
+                console.log(msgCoords);
+                controlPanel.appendChild(msgCoords);
 
                 console.log(minLon, maxLon, minLat, maxLat);
                 console.log(width, height);
@@ -197,7 +218,7 @@ $title = "Visualisation Données Zarr";
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         let windLayer = null;
-        
+
         async function loadAndDrawLayer(lonMin = 0, latMin = -90, lonMax = 360, latMax = 90) {
             let DATA_URL = `http://localhost:5000/collections/public-zarr/coverage?f=json&properties=10m_u_component_of_wind&datetime=2020-01-01T00:00:00/2020-01-01T00:00:00&bbox=${lonMin},${latMin},${lonMax},${latMax}`;
 
@@ -240,6 +261,11 @@ $title = "Visualisation Données Zarr";
 
                 console.log(minLon, maxLon, minLat, maxLat);
                 console.log(width, height);
+
+                // msgCoords = document.createElement("p");
+                // msgCoords.innerText = `Étendue des données \n [minLon, maxLon, minLat, maxLat] :\n [${minLon}, ${maxLon}, ${minLat}, ${maxLat}]`;
+                // console.log(msgCoords);
+                // controlPanel.appendChild(msgCoords);
 
                 canvas.width = width;
                 canvas.height = height;

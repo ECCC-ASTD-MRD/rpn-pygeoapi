@@ -1,9 +1,8 @@
 .sidebar {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 20px;
+    left: 20px;
     width: 300px;
-    height: 100vh;
     max-height: 800px;
     background: #FFFF;
     padding: 15px;
