@@ -1,0 +1,24 @@
+name: venv
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.12
+  - gdal
+  - mapserver
+  - php
+  - pip
+  - pip:
+    - -e ./pygeoapi   #  To serve as the core OGC API framework
+
+    # --- Data Processing ---
+
+    - xarray          # To handle gridded data within the custom provider
+    - kerchunk        # To merge multiple Zarr files into a unified JSON index
+    - gcsfs           # To access Google Cloud Storage buckets (e.g., ERA5 data)
+
+    # --- Utilities & UI ---
+
+    - tqdm            # To visualize long-running data processing tasks
+    - dask            # To support 'tqdm' callback progress bar ()
+    - flask-cors      # To allow CORS, when making API request from client.

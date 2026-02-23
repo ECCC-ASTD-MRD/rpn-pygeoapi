@@ -1,0 +1,14 @@
+.sidebar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 300px;
+    height: 100vh;
+    max-height: 800px;
+    background: #FFFF;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1000;
+    color: black;
+    padding-left: 40px;
+}

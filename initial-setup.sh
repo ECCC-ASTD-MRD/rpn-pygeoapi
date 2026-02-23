@@ -1,18 +1,12 @@
 #!/bin/bash
-#set -e
 
-# Python 3.12
-#source r.load.dot eccc/cmd/cmds/env/python/py312_2025.9.0_all
+set -ex
 
-# Virtual environment
-#python3 -m venv venv
-#source venv/bin/activate
+# Setup virtual environment
+conda env create -f environment.yml
 
 # Dependencies 
 git submodule update --init --recursive
-
-pip install --upgrade pip
-pip install -r requirements.txt
 
 # Local Sample Data
 zarr_folder="data/zarr"
@@ -40,20 +34,3 @@ if [ ! -d "${storage_folder}" ] ; then
 else
     echo "Storage space already linked: '${storage_folder}'."
 fi
-
-# ===== GDAL ===== #
-#pip uninstall -y gdal
-#pip uninstall -y mapscript
-
-exit
-
-module avail gcc    # optional: to view available modules
-module load gcc/15.1.0
-
-module avail gdal   # optional: to view available modules
-module load gdal/3.11.0
-
-pip install gdal==3.11.0
-
-# In case 'pip install' throws DISK QUOTA Exceeded Error 
-# export TMPDIR=/fs/site5/eccc/mrd/rpnsi/ibb000
