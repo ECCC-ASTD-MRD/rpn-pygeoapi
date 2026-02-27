@@ -1,3 +1,6 @@
 [submodule "pygeoapi"]
 	path = pygeoapi
 	url = https://github.com/geopython/pygeoapi.git
+[submodule "geomet"]
+	path = geomet
+	url = https://gccode.ssc-spc.gc.ca/ec-msc/geomet.git
