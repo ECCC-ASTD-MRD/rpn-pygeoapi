@@ -1,3 +1,0 @@
-[submodule "pygeoapi"]
-	path = pygeoapi
-	url = https://github.com/geopython/pygeoapi.git
