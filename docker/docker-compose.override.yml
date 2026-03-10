@@ -27,28 +27,7 @@
 #
 ###################################################################
 
-x-logging: &logging
-  logging:
-    driver: json-file
-    options:
-      mode: non-blocking
-      max-buffer-size: 100m
-      max-size: 10m
-      max-file: 1
-
 services:
   rpn-pygeoapi:
-    image: msc-ip/rpn-pygeoapi:nightly
-    container_name: rpn-pygeoapi
-    restart: unless-stopped
-    build:
-      context: ..
-    env_file:
-      - default.env
-    volumes:
-      - "/data:/data:ro"
-      # for SSL-enabled connections to internal hosts
-      - "/etc/ssl/certs:/etc/ssl/certs:ro"
-      - "/usr/local/share/ca-certificates/:/usr/local/share/ca-certificates/:ro"
-
-    <<: *logging
+    ports:
+      - 5089:80

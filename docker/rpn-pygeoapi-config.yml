@@ -1,0 +1,126 @@
+# =================================================================
+#
+# Authors: Tom Kralidis <tomkralidis@gmail.com>
+#
+# Copyright (c) 2026 Tom Kralidis
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use,
+# copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following
+# conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+#
+# =================================================================
+
+server:
+    bind:
+        host: 0.0.0.0
+        port: 5000
+    url: ${RPN_PYGEOAPI_OGC_API_URL}
+    basepath: ${RPN_PYGEOAPI_OGC_API_URL_BASEPATH}
+    mimetype: application/json; charset=UTF-8
+    encoding: utf-8
+    gzip: false
+    languages:
+        - en-CA
+        - fr-CA
+    cors: true
+    pretty_print: true
+    limits:
+        default_items: 20
+        max_items: 50
+    templates:
+        path: ${RPN_PYGEOAPI_TEMPLATES}
+        static: ${RPN_PYGEOAPI_STATIC}
+    map:
+        url: https://tile.openstreetmap.org/{z}/{x}/{y}.png
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    ogc_schemas_location: ${RPN_PYGEOAPI_OGC_SCHEMAS_LOCATION}
+    admin: false # enable admin api
+
+logging:
+    level: ERROR
+    #logfile: /tmp/rpn-pygeoapi.log
+
+metadata:
+    identification:
+        title:
+            en: RPN SI API
+            fr: RPN SI API
+        description:
+            en: RPN SI API
+            fr: RPN SI API
+        keywords:
+            en: [Weather, Meteorology, Climate, Forecasting, Floods, Weather alerts, Storms, Wind, Temperature, Precipitation, Snow, Ice]
+            fr: [Météo, Météorologie, Climat, Prévisions, Inondations, Alertes météo, Tempêtes, Vent, Température, Précipitations, Neige, Glace]
+        keywords_type: theme
+        terms_of_service:
+            en: https://www.canada.ca/en/transparency/terms.html
+            fr: https://www.canada.ca/fr/transparence/avis.html
+        url:
+            en: https://gitlab.science.gc.ca/RPN-SI/rpn-pygeoapi
+            fr: https://gitlab.science.gc.ca/RPN-SI/rpn-pygeoapi
+    license:
+        name:
+            en: Environment and Climate Change Canada Data Server End-use Licence
+            fr: Licence d'utilisation finale pour les serveurs de données d'Environnement et Changement climatique Canada
+        url:
+            en: https://eccc-msc.github.io/open-data/licence/readme_en/
+            fr: https://eccc-msc.github.io/open-data/licence/readme_fr/
+    provider:
+        name:
+            en: Government of Canada, Environment and Climate Change Canada, Meteorological Service of Canada
+            fr: Gouvernement du Canada, Environnement et Changement climatique Canada, Service météorologique du Canada
+        url:
+            en: https://www.canada.ca/en/services/environment/weather.html
+            fr: https://www.canada.ca/fr/services/environnement/meteo.html
+    contact:
+        name:
+            en: Government of Canada, Environment and Climate Change Canada, Meteorological Service of Canada
+            fr: Gouvernement du Canada, Environnement et Changement climatique Canada, Service météorologique du Canada
+        position: Service Channel
+        address:
+            en: 77 Westmorland Street, Suite 260
+            fr: 77, rue Westmorland, bureau 260
+        city: Fredericton
+        stateorprovince:
+            en: New Brunswick
+            fr: Nouveau-Brunswick
+        postalcode: E3B 6Z3
+        country: Canada
+        phone:
+            en: None
+            fr: Aucun
+        fax: +01-506-451-6010
+        email: ECWeather-Meteo@ec.gc.ca
+        url:
+            en: https://weather.gc.ca/mainmenu/contact_us_e.html
+            fr: https://meteo.gc.ca/mainmenu/contact_us_f.html
+        hours:
+            en: Monday to Friday, 1300h - 2100h UTC
+            fr: Du lundi au vendredi, de 1300h à 2100h UTC
+        instructions:
+            en: During hours of service
+            fr: Pendant les heures de service
+        role: pointOfContact
+
+resources:
+    hello-world:
+        type: process
+        processor:
+            name: HelloWorld

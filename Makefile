@@ -27,28 +27,26 @@
 #
 ###################################################################
 
-x-logging: &logging
-  logging:
-    driver: json-file
-    options:
-      mode: non-blocking
-      max-buffer-size: 100m
-      max-size: 10m
-      max-file: 1
+DOCKER_COMPOSE_ARGS=--file docker/docker-compose.yml --file docker/docker-compose.override.yml --project-name rpn-pygeoapi
 
-services:
-  rpn-pygeoapi:
-    image: msc-ip/rpn-pygeoapi:nightly
-    container_name: rpn-pygeoapi
-    restart: unless-stopped
-    build:
-      context: ..
-    env_file:
-      - default.env
-    volumes:
-      - "/data:/data:ro"
-      # for SSL-enabled connections to internal hosts
-      - "/etc/ssl/certs:/etc/ssl/certs:ro"
-      - "/usr/local/share/ca-certificates/:/usr/local/share/ca-certificates/:ro"
+build:
+	docker compose $(DOCKER_COMPOSE_ARGS) build
 
-    <<: *logging
+up:
+	docker compose $(DOCKER_COMPOSE_ARGS) up -d
+
+down:
+	docker compose $(DOCKER_COMPOSE_ARGS) down
+
+restart: down up
+
+login:
+	docker exec -ti rpn-pygeoapi /bin/bash
+
+force-build:
+	docker compose $(DOCKER_COMPOSE_ARGS) build --no-cache
+
+logs:
+	docker compose $(DOCKER_COMPOSE_ARGS) logs -f
+
+.PHONY: build up down restart force-build logs
