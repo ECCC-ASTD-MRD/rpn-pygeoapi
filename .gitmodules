@@ -4,3 +4,6 @@
 [submodule "geomet"]
 	path = geomet
 	url = git@github.com:iboudaouara/geomet-copy.git 
+[submodule "msc-pygeoapi"]
+	path = msc-pygeoapi
+	url = git@github.com:ECCC-MSC/msc-pygeoapi.git
