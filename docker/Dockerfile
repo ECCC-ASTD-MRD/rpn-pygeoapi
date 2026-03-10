@@ -1,7 +1,11 @@
-FROM python:3.13-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
-RUN apt-get update
+RUN apt-get update & apt-get install -y git
 
-RUN python -V
+RUN git clone https://github.com/geopython/pygeoapi.git ~
+
+RUN pip install -e ~/pygeoapi
+
+

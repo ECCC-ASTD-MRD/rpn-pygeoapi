@@ -13,14 +13,8 @@ class FstProvider(BaseProvider):
             print("Bonjour")
     
     def get_fields(self):
-        if not self._fields:
-            self._fields = []
-        
-        return self._fields
+        return {}
 
     def query(self, properties=[], subsets={}, bbox=[], bbox_crs=4326,
               datetime_=None, format_='json', **kwargs):
-        return {}
-    
-    def gen_covjson(self, metadata, data, fields):
         return {}
