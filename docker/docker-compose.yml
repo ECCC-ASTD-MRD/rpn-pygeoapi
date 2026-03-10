@@ -1,0 +1,10 @@
+services:
+  rpn-pygeoapi:
+    build: .
+    container_name: rpn-pygeoapi-server
+
+    ports:
+      - "5000:5000"
+
+      #environment:
+    #    - PYGEOAPI
