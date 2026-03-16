@@ -1,1 +1,2 @@
+*_000 filter=lfs diff=lfs merge=lfs -text
 2026010700_000 filter=lfs diff=lfs merge=lfs -text
