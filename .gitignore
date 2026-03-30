@@ -1,2 +1,7 @@
 .vscode
 venv
+*.bkp
+*.dtmp
+.env
+.cache
+__pycache__
