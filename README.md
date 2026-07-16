@@ -2,7 +2,7 @@
 
 RPN pygeoapi
 
-<a href="docs/architecture/c4.container.png"><img alt="RPN pygeoapi C4 component diagram" src="https://gccode.ssc-spc.gc.ca/msc-ip/msc-ip-api/-/raw/main/docs/architecture/c4.component.png?ref_type=heads" width="800"/></a>
+<a href="docs/architecture/c4.component.png"><img alt="RPN pygeoapi C4 component diagram" src="docs/architecture/c4.component.png" width="800"/></a>
 
 ## Deployments
 
@@ -36,10 +36,10 @@ make logs
 
 ## Bugs and Issues
 
-All bugs, enhancements and issues are managed on [GitLab](https://gitlab.science.gc.ca/RPN-SI/rpn-pygeoapi/-/issues)
+All bugs, enhancements and issues are managed on [GitHub](https://github.com/ECCC-ASTD-MRD/rpn-pygeoapi/issues)
 
 ## Contact
 
-* [Philippe Carphin](https://gitlab.science.gc.ca/phc001)
-* [Ibrahim Boudaouara](https://gitlab.science.gc.ca/ibb000)
-* [Tom Kralidis](https://gitlab.science.gc.ca/tok001)
+* [Philippe Carphin](https://github.com/PhilippeCarphin)
+* [Tom Kralidis](https://github.com/tomkralidis)
+* Ibrahim Boudaouara

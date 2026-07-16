@@ -73,8 +73,8 @@ metadata:
             en: https://www.canada.ca/en/transparency/terms.html
             fr: https://www.canada.ca/fr/transparence/avis.html
         url:
-            en: https://gitlab.science.gc.ca/RPN-SI/rpn-pygeoapi
-            fr: https://gitlab.science.gc.ca/RPN-SI/rpn-pygeoapi
+            en: https://github.com/ECCC-ASTD-MRD/rpn-pygeoapi
+            fr: https://github.com/ECCC-ASTD-MRD/rpn-pygeoapi
     license:
         name:
             en: Environment and Climate Change Canada Data Server End-use Licence
