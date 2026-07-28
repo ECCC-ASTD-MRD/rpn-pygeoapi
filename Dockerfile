@@ -54,7 +54,7 @@ RUN git clone ${PYGEOAPI_GITREPO} -b master --depth=1 && \
     ${BASEDIR}/venv/bin/pip3 install -r requirements.txt && \
     ${BASEDIR}/venv/bin/pip3 install pip -U && \
     ${BASEDIR}/venv/bin/pip3 install setuptools  && \
-    ${BASEDIR}/venv/bin/pip3 install flask_cors aiofiles starlette uvicorn[standard] && \
+    ${BASEDIR}/venv/bin/pip3 install flask_cors aiofiles starlette uvicorn[standard] fsspec kerchunk && \
     ${BASEDIR}/venv/bin/pip3 install . && \
     cd ${BASEDIR}
 
@@ -88,7 +88,7 @@ RUN mkdir schemas.opengis.net && \
 # Copy application configuration and entrypoint script
 COPY ./docker/rpn-pygeoapi-config.yml ${BASEDIR}/rpn-pygeoapi-config.yml
 COPY ./docker/entrypoint.sh ${BASEDIR}/entrypoint.sh
-#COPY ./providers/*.py ${BASEDIR}/venv/lib/python3.12/site-packages/pygeoapi/provider
+COPY ./providers/*.py ${BASEDIR}/venv/lib/python3.12/site-packages/pygeoapi/provider
 
 # Set permission and entrypoint
 RUN chmod +x ${BASEDIR}/entrypoint.sh
