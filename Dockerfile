@@ -44,7 +44,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:ubuntugis/ubuntugis-unstable && \
     apt-get update && \
-    apt-get install -y python3 git curl unzip python3-gdal libgdal-dev python3-pip  python3.12-venv
+    apt-get install -y python3 git curl unzip python3-gdal libgdal-dev python3-pip  python3.12-venv libxml2 libxml2-dev libexpat1 gfortran gcc g++ ninja-build cmake make bison flex
 
 RUN python3 -m venv ${BASEDIR}/venv
 
@@ -84,6 +84,22 @@ RUN mkdir schemas.opengis.net && \
     apt-get clean && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
+
+# Cloner librmn : Note if this step is cached we won't have the actual commit
+# pointed by dev_virtualizarr on github but the one that was pointed by
+# dev_virtualizarr when the cache entry was made.  In this case use a
+# `docker builder prune`
+RUN git clone -b dev_virtualizarr --recursive https://github.com/ECCC-ASTD-MRD/librmn.git ${BASEDIR}/librmn
+# App has an executable that requires MPI that is not disabled even if we build with -DWITH_OMPI=OFF
+COPY disable-util-build.patch librmn/App/
+RUN git -C librmn/App apply disable-util-build.patch
+RUN cmake -G Ninja -S ${BASEDIR}/librmn -B ${BASEDIR}/librmn_build -DWITH_OMPI=OFF
+RUN cmake --build ${BASEDIR}/librmn_build
+RUN cmake --install ${BASEDIR}/librmn_build --prefix /opt/librmn
+ENV LD_LIBRARY_PATH="/opt/librmn/lib"
+ENV PYTHONPATH="/opt/librmn/lib/python"
+RUN ${BASEDIR}/venv/bin/pip install --upgrade pip setuptools
+RUN ${BASEDIR}/venv/bin/pip install numpy xarray numcodecs virtualizarr fsspec kerchunk
 
 # Copy application configuration and entrypoint script
 COPY ./docker/rpn-pygeoapi-config.yml ${BASEDIR}/rpn-pygeoapi-config.yml
