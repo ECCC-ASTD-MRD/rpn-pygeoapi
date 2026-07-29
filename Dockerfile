@@ -98,6 +98,7 @@ RUN cmake --build ${BASEDIR}/librmn_build
 RUN cmake --install ${BASEDIR}/librmn_build --prefix /opt/librmn
 ENV LD_LIBRARY_PATH="/opt/librmn/lib"
 ENV PYTHONPATH="/opt/librmn/lib/python"
+COPY 2026042600_000 /home/smsh001/arcsfc/2026/04/26/regeta/2026042600_000
 RUN ${BASEDIR}/venv/bin/pip install --upgrade pip setuptools
 RUN ${BASEDIR}/venv/bin/pip install numpy xarray numcodecs virtualizarr fsspec kerchunk
 
