@@ -1,0 +1,15 @@
+# App has a utility src/util/app.c that unconditionally includes mpi.h
+# through including App_MPMD.h that should probably be inside an #ifdef HAVE_MPI
+# but we don't need it to build our image so we just apply this patch
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d2f942b..e9532c7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -28,7 +28,6 @@ include(ec_doxygen)
+ ec_build_info()
+
+ add_subdirectory(src/lib)
+-add_subdirectory(src/utils)
+ add_subdirectory(script)
+ enable_testing()
+ add_subdirectory(test)

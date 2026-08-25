@@ -50,5 +50,6 @@ services:
       # for SSL-enabled connections to internal hosts
       - "/etc/ssl/certs:/etc/ssl/certs:ro"
       - "/usr/local/share/ca-certificates/:/usr/local/share/ca-certificates/:ro"
-
+      - "/home/phc001/pygeoapi-manifests:/pygeoapi-manifests:ro"
+      - "/fs/hestia_Heccc/rpnsi/phc001/pygeoapi-data:/fs/hestia_Heccc/rpnsi/phc001/pygeoapi-data:ro"
     <<: *logging
